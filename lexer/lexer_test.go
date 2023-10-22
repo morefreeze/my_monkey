@@ -50,19 +50,17 @@ func TestNextToken(t *testing.T) {
 	}
 	l := New(input)
 	for i, tC := range testCases {
-		t.Run("simple", func(t *testing.T) {
-			tok := l.NextToken()
-			if tok.Type != tC.expectedType {
-				t.Fatalf("test[%d] - tokenType wrong. expected=%q, got=%q",
-					i, tC.expectedType, tok.Type,
-				)
-			}
-			if tok.Literal != tC.expectedLiteral {
-				t.Fatalf("test[%d] - Literal wrong. expected=%q, got=%q",
-					i, tC.expectedLiteral, tok.Literal,
-				)
-			}
-		})
+		tok := l.NextToken()
+		if tok.Type != tC.expectedType {
+			t.Fatalf("test[%d] - tokenType wrong. expected=%q, got=%q",
+				i, tC.expectedType, tok.Type,
+			)
+		}
+		if tok.Literal != tC.expectedLiteral {
+			t.Fatalf("test[%d] - Literal wrong. expected=%q, got=%q",
+				i, tC.expectedLiteral, tok.Literal,
+			)
+		}
 	}
 }
 
@@ -78,21 +76,54 @@ let result = add(five, ten);`
 		expectedLiteral string
 	}{
 		{token.LET, "let"},
+		{token.IDENT, "five"},
+		{token.ASSIGN, "="},
+		{token.INT, "5"},
+		{token.SEMICOLON, ";"},
+		{token.LET, "let"},
+		{token.IDENT, "ten"},
+		{token.ASSIGN, "="},
+		{token.INT, "10"},
+		{token.SEMICOLON, ";"},
+		{token.LET, "let"},
+		{token.IDENT, "add"},
+		{token.ASSIGN, "="},
+		{token.FUNCTION, "fn"},
+		{token.LPAREN, "("},
+		{token.IDENT, "x"},
+		{token.COMMA, ","},
+		{token.IDENT, "y"},
+		{token.RPAREN, ")"},
+		{token.LBRACE, "{"},
+		{token.IDENT, "x"},
+		{token.PLUS, "+"},
+		{token.IDENT, "y"},
+		{token.SEMICOLON, ";"},
+		{token.RBRACE, "}"},
+		{token.SEMICOLON, ";"},
+		{token.LET, "let"},
+		{token.IDENT, "result"},
+		{token.ASSIGN, "="},
+		{token.IDENT, "add"},
+		{token.LPAREN, "("},
+		{token.IDENT, "five"},
+		{token.COMMA, ","},
+		{token.IDENT, "ten"},
+		{token.RPAREN, ")"},
+		{token.SEMICOLON, ";"},
 	}
 	l := New(input)
 	for i, tC := range testCases {
-		t.Run("sentence", func(t *testing.T) {
-			tok := l.NextToken()
-			if tok.Type != tC.expectedType {
-				t.Fatalf("test[%d] - tokenType wrong. expected=%q, got=%q",
-					i, tC.expectedType, tok.Type,
-				)
-			}
-			if tok.Literal != tC.expectedLiteral {
-				t.Fatalf("test[%d] - Literal wrong. expected=%q, got=%q",
-					i, tC.expectedLiteral, tok.Literal,
-				)
-			}
-		})
+		tok := l.NextToken()
+		if tok.Type != tC.expectedType {
+			t.Fatalf("test[%d] - tokenType wrong. expected=%q, got=%q",
+				i, tC.expectedType, tok.Type,
+			)
+		}
+		if tok.Literal != tC.expectedLiteral {
+			t.Fatalf("test[%d] - Literal wrong. expected=%q, got=%q",
+				i, tC.expectedLiteral, tok.Literal,
+			)
+		}
 	}
 }
